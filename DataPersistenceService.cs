@@ -1,6 +1,7 @@
 ﻿using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Xml.Serialization;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace AATTechnical
 {
@@ -20,7 +21,7 @@ namespace AATTechnical
                 await _context.Numbers.AddAsync(new Number
                 {
                     Value = value,
-                    IsPrime = IsPrime(value) ? 1 : 0
+                    IsPrime = IsPrime(value) ? true : false
                 });
             }
             await _context.SaveChangesAsync();
@@ -50,7 +51,27 @@ namespace AATTechnical
             return memoryStream.ToArray();
         }
 
-//        private bool IsPrime(int number) => // Implement prime checking logic
-}
+        public bool IsPrime(int number)
+        {
+            if (number <= 1)
+                return false; // Numbers less than 2 are not prime
+
+            if (number == 2 || number == 3)
+                return true; // 2 and 3 are prime numbers
+
+            if (number % 2 == 0 || number % 3 == 0)
+                return false; // Eliminate multiples of 2 and 3
+
+            // Check divisibility starting from 5, only up to the square root of the number
+            for (int i = 5; i * i <= number; i += 6)
+            {
+                if (number % i == 0 || number % (i + 2) == 0)
+                    return false;
+            }
+
+            return true; // The number is prime if it passed all checks
+        }
+
+    }
 
 }
