@@ -3,6 +3,7 @@
 @page "/data-computation"
 @inject DataComputationService ComputationService
 @inject DataPersistenceService PersistenceService
+@inject IJSRuntime JSRuntime
 
 <h3>Data Computation</h3>
 
@@ -30,13 +31,25 @@
     private async Task DownloadXml()
     {
         var xmlData = await PersistenceService.GetXmlDataAsync();
-        // Provide download logic
+        var fileName = "data.xml";
+
+        // Convert byte array to Base64 string for downloading in JavaScript
+        var base64XmlData = Convert.ToBase64String(xmlData);
+
+        // Use JS interop to initiate download
+        await JSRuntime.InvokeVoidAsync("downloadFile", fileName, base64XmlData, "application/xml");
     }
 
     private async Task DownloadBinary()
     {
         var binaryData = await PersistenceService.GetBinaryDataAsync();
-        // Provide download logic
+        var fileName = "data.bin";
+
+        // Convert byte array to Base64 string for downloading in JavaScript
+        var base64BinaryData = Convert.ToBase64String(binaryData);
+
+        // Use JavaScript interop to initiate download as a .bin file
+        await JSRuntime.InvokeVoidAsync("downloadFile", fileName, base64BinaryData, "application/octet-stream");
     }
 }
 

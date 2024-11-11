@@ -10,6 +10,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Register DataPersistenceService
 builder.Services.AddScoped<DataPersistenceService>();
+builder.Services.AddScoped<DataComputationService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

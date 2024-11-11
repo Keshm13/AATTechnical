@@ -1,6 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Xml.Serialization;
-using System;
+﻿using System.Xml.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace AATTechnical
@@ -69,7 +67,7 @@ namespace AATTechnical
                     return false;
             }
 
-            return true; // The number is prime if it passed all checks
+            return true; 
         }
 
     }
